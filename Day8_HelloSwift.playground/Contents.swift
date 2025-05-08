@@ -50,6 +50,10 @@ print(multiplyResult)
 let school = {(a: String, b: String) in
     return "\(a) \(b)"
 }
+    
+(/* interactive calculator */)
+
+import Foundation
 
 enum Operation {
     case addition
@@ -58,29 +62,89 @@ enum Operation {
     case division
 }
 
-func performOperation(_ operation: Operation, _ a: Int, _ b: Int) -> Int {
-    let result : Int
+func performOperation(_ operation: Operation, _ a: Double, _ b: Double) -> Double {
+    let result: Double
     
     switch operation {
     case .addition:
-        let addition = {(x: Int, y: Int) in x + y }
-        result = addition(a, b)
+        result = a + b
     case .subtraction:
-        let subtraction = {(x: Int, y: Int) in x - y }
-        result = subtraction(a, b)
+        result = a - b
     case .multiplication:
-        let multiplication = {(x: Int, y: Int) in x * y }
-        result = multiplication(a, b)
+        result = a * b
     case .division:
-        let division = {(x: Int, y: Int) in x / y }
-        result = division(a, b)
+        if b == 0 {
+            print("Error: division by zero is not allowed!")
+            return 0.0
+        } else {
+            result = a / b
+        }
     }
     
     return result
 }
-
-let number1 = 10
-let number2 = 20
-
-let finalResult = performOperation(.multiplication, number1, number2)
-print("Result: \(finalResult)")
+while true {
+    print("Enter first number (or type 'exit'):")
+    guard let firstInput = readLine() else {
+        print("Invalid input for first number.")
+        continue
+    }
+    if firstInput.lowercased() == "exit" {
+        print("Goodbye!")
+        break
+    }
+    guard let number1 = Double(firstInput) else {
+        print("Invalid number. Please try again.")
+        continue
+    }
+    
+    print("Enter second number (or type 'exit'):")
+    guard let secondInput = readLine() else {
+        print("Invalid input for second number.")
+        continue
+    }
+    if secondInput.lowercased() == "exit" {
+        print("Goodbye!")
+        break
+    }
+    guard let number2 = Double(secondInput) else {
+        print("Invalid number. Please try again.")
+        continue
+    }
+    
+    print("Choose your operator (add, subtract, multiply, divide)(or type 'exit'):")
+    guard let operatorInput = readLine() else {
+        print("Invalid input for operator.")
+        continue
+    }
+    if operatorInput.lowercased() == "exit" {
+        print("Goodbye!")
+        break
+    }
+    
+    let operation: Operation
+    
+    switch operatorInput.lowercased() {
+    case "add":
+        operation = .addition
+    case "subtract":
+        operation = .subtraction
+    case "multiply":
+        operation = .multiplication
+    case "divide":
+        operation = .division
+    default:
+        print("Invalid operator.")
+        exit(1)
+    }
+    
+    let result = performOperation(operation, number1, number2)
+    print(String(format: "Result: %.2f", result))
+    
+    print("Would you like to perform another calculation? (yes/no")
+    if let againInput = readLine(), againInput.lowercased() == "no" {
+        print("Goodbye!")
+        break
+    }
+    
+}
