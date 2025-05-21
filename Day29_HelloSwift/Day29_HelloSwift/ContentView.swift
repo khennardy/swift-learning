@@ -14,20 +14,25 @@ struct SettingRowView: View {
                 settingRow(icon: "gearshape", label: "Settings")
                 Divider()
                 settingRow(icon: "envelope", label: "Email Notifications")
+                Divider()
+                settingRow(icon: "lock", label: "Password & Security")
+                Divider()
+                settingRow(icon: "bell", label: "Push Alerts")
             }
-            .background(Color.yellow)
-            .cornerRadius(5)
+            .background(Color(.systemBackground))
+            .cornerRadius(10)
             .shadow(radius: 2)
             .padding(.horizontal)
             
-            settingCard(icon: "bell", label: "Push Alerts")
         }
         .padding()
+        .background(Color(.systemGroupedBackground))
     }
     
     func settingRow(icon: String, label: String) -> some View {
         HStack {
             Image(systemName: icon)
+                .foregroundStyle(.blue)
             Text(label)
             Spacer()
             Image(systemName: "chevron.right")
@@ -37,18 +42,6 @@ struct SettingRowView: View {
         .padding(.horizontal)
     }
     
-    func settingCard(icon: String, label: String) -> some View {
-        VStack(spacing: 0) {
-            HStack {
-                settingRow(icon: icon, label: label)
-            }
-            
-            .background(Color.yellow)
-            .cornerRadius(10)
-            .shadow(radius: 2)
-            .padding(.horizontal)
-        }
-    }
 }
 
 #Preview {
