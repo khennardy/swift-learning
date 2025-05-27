@@ -10,6 +10,7 @@ import SwiftUI
 struct EditProfileView: View {
     @Binding var name: String
     @Binding var bio: String
+    @State private var showAlert = false
     
     var body: some View {
         Form {
@@ -23,6 +24,23 @@ struct EditProfileView: View {
             }
         }
         .navigationTitle("Edit Profile")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Save") {
+                    saveProfile()
+                }
+            }
+        }
+        .onDisappear {
+            saveProfile()
+        }
+        .alert("Profile Saved", isPresented: $showAlert) {
+            Button("OK", role: .cancel) { }
+        }
+    }
+    func saveProfile() {
+        print("Saving: \(name), \(bio)")
+        showAlert = true
     }
 }
 
